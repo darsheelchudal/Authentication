@@ -9,4 +9,4 @@ import express from "express";
 
 export const router = express.Router();
 
-router.get("/auth", authUser);
+router.post("/auth", authUser);
