@@ -1,4 +1,10 @@
-import { authUser } from "../controllers/users.controller.js";
+import {
+  authUser,
+  registerUser,
+  logoutUser,
+  getUserProfile,
+  updateUserProfile,
+} from "../controllers/users.controller.js";
 import express from "express";
 
 // ** api/users - Register the user     (POST)
@@ -9,4 +15,8 @@ import express from "express";
 
 export const router = express.Router();
 
-router.post("/auth", authUser);
+router.post("/users/auth", authUser);
+router.post("/users", registerUser);
+router.post("/users/logout", logoutUser);
+router.get("/users/profile", getUserProfile);
+router.put("/users/profile", updateUserProfile);
