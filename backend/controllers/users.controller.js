@@ -5,6 +5,7 @@ const authUser = asyncHandler(async (req, res) => {
 });
 
 const registerUser = asyncHandler(async (req, res) => {
+  console.log(req.body);
   res.status(200).json({ message: "Register user" });
 });
 const logoutUser = asyncHandler(async (req, res) => {
