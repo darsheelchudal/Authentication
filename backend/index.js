@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.status(200).send("Server running  Hello user!!");
+  res.status(200).send("Server running user!!");
 });
 app.use("/api", router);
 
