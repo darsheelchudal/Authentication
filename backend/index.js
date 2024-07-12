@@ -2,6 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import { router } from "./routes/users.routes.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
+import dbConnect from "./config/db.js";
+
+dbConnect();
 
 dotenv.config();
 
@@ -13,7 +16,6 @@ app.get("/", (req, res) => {
   res.status(200).send("Server running  Hello user!!");
 });
 app.use("/api", router);
-
 
 //Middlewares
 app.use(notFound);
