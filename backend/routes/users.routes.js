@@ -6,6 +6,7 @@ import {
   updateUserProfile,
 } from "../controllers/users.controller.js";
 import express from "express";
+import { protect } from "../middleware/authMiddleware.js";
 
 // ** api/users - Register the user     (POST)
 // ** api/users/auth - Authenticate the user and get a token and a cookie (POST)
@@ -18,5 +19,8 @@ export const router = express.Router();
 router.post("/users/auth", authUser);
 router.post("/users", registerUser);
 router.post("/users/logout", logoutUser);
-router.get("/users/profile", getUserProfile);
-router.put("/users/profile", updateUserProfile);
+
+router
+  .route("/users/profile")
+  .get(protect(), getUserProfile)
+  .put(protect(), updateUserProfile);
