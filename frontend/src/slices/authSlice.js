@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   userInfo: localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))
-    : null,
+    : { id: 1, Name: "Darsheel", email: "darsheelchudal11@gmail.com" },
 };
 
 const authSlice = createSlice({
