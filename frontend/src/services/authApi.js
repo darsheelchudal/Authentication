@@ -6,13 +6,5 @@ export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: baseQuery,
   tagTypes: ["User"],
-  endpoints: (builder) => ({
-    profile: builder.query({
-      query: () => "/profile",
-    }),
-  }),
+  endpoints: (builder) => ({}),
 });
-
-export const { useProfileQuery } = authApi;
-
-export default authApi;
