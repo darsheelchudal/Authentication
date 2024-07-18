@@ -2,25 +2,42 @@ import React, { useState, useEffect } from "react";
 import FormContainer from "../components/FormContainer";
 import { Link } from "react-router-dom";
 import { setCredentials } from "../features/slices/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../services/usersApi";
 
 function LoginScreen() {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [login, isLoading, error] = useLoginMutation();
+  const { userInfo } = useSelector((state) => state.auth);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [navigate, userInfo]);
+
+  console.log(formData);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted");
-    dispatch(setCredentials(formData));
-    setFormData({ email: "", password: "" });
+    try {
+      const res = await login(formData).unwrap();
+      dispatch(setCredentials({ ...res }));
+      setFormData({ email: "", password: "" });
+      console.log("Submitted");
+
+      navigate("/");
+    } catch (err) {
+      console.log("Error", err);
+    }
   };
 
   return (

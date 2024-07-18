@@ -5,6 +5,7 @@ const HomeScreen = () => {
   return (
     <>
       <Hero />
+      <div className="text-3xl font-bold text-center"></div>
     </>
   );
 };
