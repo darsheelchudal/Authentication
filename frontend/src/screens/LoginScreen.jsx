@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import FormContainer from "../components/FormContainer";
 import { Link } from "react-router-dom";
+import { setCredentials } from "../features/slices/authSlice";
+import { useDispatch } from "react-redux";
 
 function LoginScreen() {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,6 +19,7 @@ function LoginScreen() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submitted");
+    dispatch(setCredentials(formData));
     setFormData({ email: "", password: "" });
   };
 
