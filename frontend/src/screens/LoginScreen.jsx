@@ -5,6 +5,7 @@ import { setCredentials } from "../features/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../services/usersApi";
+import { toast } from "react-toastify";
 
 function LoginScreen() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -32,11 +33,11 @@ function LoginScreen() {
       const res = await login(formData).unwrap();
       dispatch(setCredentials({ ...res }));
       setFormData({ email: "", password: "" });
-      console.log("Submitted");
+      toast.success("Success");
 
       navigate("/");
     } catch (err) {
-      console.log("Error", err);
+      toast.error(err.data.message);
     }
   };
 
