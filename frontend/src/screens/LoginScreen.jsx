@@ -11,7 +11,7 @@ function LoginScreen() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [login, isLoading, error] = useLoginMutation();
+  const [login, { isLoading, error }] = useLoginMutation();
   const { userInfo } = useSelector((state) => state.auth);
 
   const handleChange = (e) => {
@@ -44,6 +44,11 @@ function LoginScreen() {
   return (
     <>
       <FormContainer>
+        {isLoading && (
+          <>
+            <h2 className="text-center text-lg font-medium">Loading ... </h2>
+          </>
+        )}
         <h1 className="text-3xl font-bold">Sign in</h1>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-y-4">

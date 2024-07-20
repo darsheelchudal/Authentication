@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Hero() {
+  const { userInfo } = useSelector((state) => state.auth);
+
   return (
     <>
       <div className="w-full">
@@ -18,17 +21,29 @@ function Hero() {
               </p>
             </div>
             <div className="flex justify-center items-center gap-x-4">
-              <Link to="/login">
-                <button className="p-2 rounded-lg bg-blue-700 text-white">
-                  Sign in{" "}
-                </button>
-              </Link>
-              <Link to="/register">
-                {" "}
-                <button className="p-2 rounded-lg bg-slate-700 text-white">
-                  Sign up
-                </button>
-              </Link>
+              {userInfo == null ? (
+                <>
+                  <Link to="/login">
+                    <button className="p-2 rounded-lg bg-blue-700 text-white">
+                      Sign in{" "}
+                    </button>
+                  </Link>
+                  <Link to="/register">
+                    {" "}
+                    <button className="p-2 rounded-lg bg-slate-700 text-white">
+                      Sign up
+                    </button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  {
+                    <div className="text-xl font-semibold text-green">
+                      Welcome new user : {userInfo.email} !!!{" "}
+                    </div>
+                  }
+                </>
+              )}
             </div>
           </div>{" "}
         </div>
