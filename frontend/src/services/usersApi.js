@@ -29,8 +29,19 @@ export const usersApi = baseApi.injectEndpoints({
         method: "POST",
       }),
     }),
+    update: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation } =
-  usersApi;
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useRegisterMutation,
+  useUpdateMutation,
+} = usersApi;
