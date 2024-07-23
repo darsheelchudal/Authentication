@@ -53,9 +53,11 @@ function Header() {
                   {isOpen && (
                     <>
                       <div className="absolute mt-2 w-full bg-white shadow-lg rounded-md text-black">
-                        <button className="flex gap-x-2 items-center w-full px-4 py-2 text-left hover:bg-gray-100">
-                          Profile
-                        </button>
+                        <Link to="/profile">
+                          <button className="flex gap-x-2 items-center w-full px-4 py-2 text-left hover:bg-gray-100">
+                            Profile
+                          </button>
+                        </Link>
                         <button
                           onClick={handleLogout}
                           className="flex gap-x-2 items-center w-full px-4 py-2 text-left hover:bg-gray-100"

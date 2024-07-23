@@ -1,13 +1,19 @@
 import React, { useEffect } from "react";
 import FormContainer from "../../components/FormContainer";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useUpdateMutation } from "../../services/usersApi";
 import { toast } from "react-toastify";
+import { setCredentials } from "../../features/slices/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const ProfileScreen = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const [tab, setTab] = useState("display");
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -21,15 +27,24 @@ const ProfileScreen = () => {
     setFormData({ ...formData, [name]: value });
   };
   useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-  const handleSubmit = (e) => {
+    setFormData({
+      name: userInfo.name || "",
+      email: userInfo.email || "",
+    });
+  }, []);
+
+  console.log(formData);
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const res = await update(formData).unwrap();
+      dispatch(setCredentials({ ...res }));
+      setFormData({ name: "", email: "", password: "" });
+      toast.success("Updated successfully");
+      navigate("/");
     } catch (err) {
       toast.error(err.data?.message);
     }
-    console.log("submitted data");
   };
   return (
     <>
@@ -41,8 +56,6 @@ const ProfileScreen = () => {
               <ul className="gap-y-4 flex flex-col font-semibold">
                 <li>{`Name : ${userInfo.name}`}</li>
                 <li>{`Email : ${userInfo.email}`}</li>
-                <li>{`createdAt : ${userInfo.createdAt}`}</li>
-                <li>{`updatedAt : ${userInfo.updatedAt}`}</li>
               </ul>
             </div>
             <p className="font-medium text-red-900">
@@ -102,11 +115,10 @@ const ProfileScreen = () => {
                   <input
                     type="password"
                     className="border rounded-lg w-full p-2 outline-none"
-                    placeholder="Enter password..."
+                    placeholder="Password can't be shown"
                     id="password"
                     name="password"
                     onChange={handleChange}
-                    value={formData.password}
                   />
                 </div>
                 <div className="btn">

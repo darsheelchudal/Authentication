@@ -31,7 +31,7 @@ export const usersApi = baseApi.injectEndpoints({
     }),
     update: builder.mutation({
       query: (data) => ({
-        url: `${USERS_URL}/`,
+        url: `${USERS_URL}/profile`,
         method: "PUT",
         body: data,
       }),
