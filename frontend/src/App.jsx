@@ -4,7 +4,7 @@ import HomeScreen from "./screens/HomeScreen";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
-import ProfileScreen from "./screens/ProfileScreen";
+import ProfileScreen from "./screens/Profile/ProfileScreen";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./components/PrivateRoute";
