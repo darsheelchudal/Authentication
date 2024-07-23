@@ -14,10 +14,11 @@ function RegisterScreen() {
     password: "",
     cpassword: "",
   });
+  const dispatch = useDispatch();
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  const [register, { isLoading, isError }] = useRegisterMutation();
+  const [register, { isLoading }] = useRegisterMutation();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -36,24 +37,30 @@ function RegisterScreen() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (password !== cpassword) {
+    if (formData.password !== formData.cpassword) {
       toast.error("Password don't match with each other");
-    } else {
-      try {
-        console.log("Form submitted");
-        const res = await register(formData).unwrap();
-        dispatch(setCredentials({ ...res }));
-        setFormData({
-          name: "",
-          email: "",
-          password: "",
-          cpassword: "",
-        });
-        toast.success("Successfully Registered");
-        navigate("/");
-      } catch (err) {
-        toast.error(err.data?.message);
-      }
+    }
+    try {
+      console.log("Form submitted");
+      const { cpassword, ...submitData } = formData;
+      console.log("here 1");
+      const res = await register(submitData).unwrap();
+
+      console.log("here 2");
+
+      dispatch(setCredentials({ ...res }));
+      console.log("here 3");
+
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        cpassword: "",
+      });
+      toast.success("Successfully Registered");
+      navigate("/");
+    } catch (err) {
+      toast.error(err.data?.message);
     }
   };
 
